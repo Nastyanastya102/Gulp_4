@@ -1,0 +1,24 @@
+@import "../../node_modules/normalize.css/normalize";
+
+.main-header{
+    display: flex;
+    .main-logo{
+        .main-logo__link{
+            .main-logo__img{
+                height: 70px;
+                width: 70px;
+            }
+        }
+    }
+    .main-nav{
+        .main-nav__list{
+            display: flex;
+            list-style-type: none;
+            .main-nav__link{
+                color: saturate($color: #55459c, $amount: 0);
+                text-decoration: none;
+            }
+        }
+        
+    }
+}
