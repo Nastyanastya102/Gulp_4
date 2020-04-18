@@ -15,6 +15,7 @@ gulp-babel
 gulp-imagemin
 imagemin-pngquant
 gulp-newer
+gulp-cache
 */
 
 //Variables
@@ -27,6 +28,7 @@ const gulp = require('gulp'),
     rename = require('gulp-rename'),
     del = require('del'),
     uglify = require('gulp-uglify'),
+    cache = require('gulp-cache'),
     concat = require('gulp-concat'),
     prefixer = require('gulp-autoprefixer'),
     sourcemaps = require('gulp-sourcemaps'),
@@ -103,7 +105,7 @@ function js() {
 function image() {
     return gulp.src(path.src.image)
            .pipe(newer(path.dist.image))
-           .pipe(imagemin([
+           .pipe(cache(imagemin([
                  imagemin.gifsicle({interlaced: true}),
                  imageminJpegRecompress({
                     progressive: true,
@@ -114,15 +116,20 @@ function image() {
                     quality: [0.65, 0.7],
                     speed: 5}),
                 imagemin.svgo({plugins: [{removeViewBox: true}]})
-                  ]))
+                  ])))
 			.pipe(gulp.dest(path.dist.image))
 			.pipe(reload({stream: true}));
 }
 
 
-function clean() {
-    return del(['dist/*'])
+function clean(callback) {
+    return del(['dist/**/*', '!dist/image', '!dist/image/**/*'],callback)
 }
+function cached(callback) {
+    del('dist');
+  return cache.clearAll(callback);
+}
+
 // Js library handling and concat in one js file
 
 // function jsLibs() {
@@ -152,6 +159,8 @@ gulp.task('style:build',style);
 gulp.task('js:build', js);
 gulp.task('image:build', image);
 gulp.task('clean-dist', clean);
+gulp.task('cached-image', clean);
+
 
 // gulp.task('js:libs', jsLibs);
 // gulp.task('fonts:libs', fonts);
