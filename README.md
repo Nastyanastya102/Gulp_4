@@ -5,7 +5,6 @@
 ## Что включает в себя сборка?
 
 * gulp-autoprefixer — автоматически расставляет вендорные префиксы в CSS в соответствии с сервисом Can I Use;
-* gulp-pug — компиляция Pug в HTML;
 * gulp-concat - конкатенация файлов;
 * gulp-sass — компиляция SASS,SCSS в CSS;
 * gulp-rename — переименование файлов;
